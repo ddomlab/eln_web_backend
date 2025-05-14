@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify, send_from_directory
-import json
 from flask_cors import cross_origin
 import search_process
 
