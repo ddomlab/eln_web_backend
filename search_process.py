@@ -2,6 +2,7 @@ import fill_info
 import resourcemanage
 import json
 
+
 rm = resourcemanage.Resource_Manager()
 templates = rm.get_items_types()
 

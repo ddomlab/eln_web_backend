@@ -11,14 +11,6 @@ def ping():
 @app.route("/")
 def index():
     return send_from_directory(app.static_folder, "index.html")
-@app.route('/process', methods=['POST'])
-def process():
-    data = request.get_json()
-    print("Received:", data)
-    # Do some Python logic here
-    # For example, let's just echo the data back
-    result = {"message": "Processed successfully", "input": data}
-    return jsonify(result)
 
 @app.route('/search', methods=['POST'])
 @cross_origin(origins="http://localhost:8000")
@@ -30,7 +22,6 @@ def search():
     print("Search query:", CAS)
     results = search_process.search_and_fill(template, CAS)
     print("Results:", results)
-
     return jsonify(results)
 
 @app.route('/template', methods=['GET'])
@@ -39,7 +30,7 @@ def get_template():
     cat = request.args.get('category')
     if cat is None:
         return jsonify({})
-    return search_process.fill_info.rm.get_items_types()[int(cat)-1]
+    return search_process.rm.get_items_types()[int(cat)-1]
 
 @app.route('/add_resource', methods=['POST'])
 @cross_origin(origins="http://localhost:8000")
