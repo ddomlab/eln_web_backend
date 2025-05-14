@@ -1,13 +1,23 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import cross_origin
 import search_process
+import resourcemanage
 
 app = Flask(__name__)
+def rm():
+    """
+    Initialize the Resource_Manager with the API key from cookies.
+    This function is called in each route that requires it.
+    """
+    key = request.cookies.get("apiKey")
+    if key is None:
+        raise ValueError("No API key provided")
+    return resourcemanage.Resource_Manager(key=key)
 @app.route('/ping', methods=['GET'])
 def ping():
     return "pong", 200
 
-@app.route("/")
+@app.route("/add_resource_interface")
 def index():
     return send_from_directory(app.static_folder, "index.html")
 
@@ -29,7 +39,11 @@ def get_template():
     cat = request.args.get('category')
     if cat is None:
         return jsonify({})
-    return search_process.rm.get_items_types()[int(cat)-1]
+    try:
+        return rm().get_items_types()[int(cat)-1]
+    except Exception as e:
+        print("Error initializing Resource_Manager:", e)
+        return jsonify({"status": "error", "error": str(e)}), 400
 
 @app.route('/add_resource', methods=['POST'])
 @cross_origin(origins="http://localhost:8000")
@@ -42,8 +56,12 @@ def add_resource():
         # At this point, `data` is a plain Python dict
         # print("Received form submission:", data)
         resource = search_process.dict_complexify(data)
-        search_process.rm.create_item(data['category'], resource)
-        return jsonify({"status": "ok", "received": data})
+        try:
+            rm().create_item(data['category'], resource)
+            return jsonify({"status": "ok", "received": data})
+        except Exception as e:
+            print("Error Initializing Resource Manager:", e)
+            return jsonify({"status": "error", "error": str(e)}), 400
     
     except Exception as e: # send all errors to the client
         print("Error parsing submission:", e)
