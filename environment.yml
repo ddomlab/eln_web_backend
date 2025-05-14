@@ -1,8 +1,14 @@
-name:  # Environment name
+name: elnwebbackend # Environment name
 
 dependencies:  # Packages should be installed through conda if possible
-  - python=  # Python version
+  - python=3.12.4  # Python version
   - pre-commit
   - ruff
+  - flask
+  - pandas
 
   - pip:  # Install additional packages through pip if they're not available in the default conda channel
+    - elabapi_python
+    - requests
+    - pubchempy
+      # make sure to install the eln_packages_common--still need to make this a more distributable package but for now do it manually.
