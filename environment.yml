@@ -11,4 +11,5 @@ dependencies:  # Packages should be installed through conda if possible
     - elabapi_python
     - requests
     - pubchempy
+    - -e ../eln_packages_common  # This is a local package, so use -e to install it in editable mode
       # make sure to install the eln_packages_common--still need to make this a more distributable package but for now do it manually.
