@@ -1,9 +1,9 @@
-import fill_info
-import resourcemanage
+import eln_packages_common.fill_info as fill_info
+from eln_packages_common.resourcemanage import Resource_Manager
 import json
 
 
-rm = resourcemanage.Resource_Manager()
+rm = Resource_Manager()
 templates = rm.get_items_types()
 
 def dict_simplify(d:dict)->dict: # TODO: why did i write these??

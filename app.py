@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import cross_origin
 import search_process
-import resourcemanage
+from eln_packages_common.resourcemanage import Resource_Manager
 
 app = Flask(__name__)
 
@@ -13,7 +13,7 @@ def rm():
     key = request.cookies.get("apiKey")
     if key is None:
         raise ValueError("No API key provided")
-    return resourcemanage.Resource_Manager(key=key)
+    return Resource_Manager(key=key)
 
 
 @app.route('/ping', methods=['GET'])
