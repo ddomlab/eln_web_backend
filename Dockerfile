@@ -5,6 +5,7 @@ WORKDIR /app
 
 # Copy everything
 COPY . .
+# COPY eln_packages_common ./eln_packages_common
 
 # Create conda environment from environment.yml
 COPY environment.yml .
@@ -20,4 +21,4 @@ SHELL ["conda", "run", "-n", "customenv", "/bin/bash", "-c"]
 EXPOSE 5000
 
 # Run Flask app using the conda env
-CMD ["conda", "run", "-n", "customenv", "python", "app.py"]
+CMD ["conda", "run", "-n", "elnwebbackend-2", "python", "app.py"]

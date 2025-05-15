@@ -1,15 +1,18 @@
-name: elnwebbackend # Environment name
+name: elnwebbackend-2
+ # Environment name
 
 dependencies:  # Packages should be installed through conda if possible
   - python=3.12.4  # Python version
   - pre-commit
   - ruff
   - flask
+  - flask-cors
   - pandas
 
   - pip:  # Install additional packages through pip if they're not available in the default conda channel
     - elabapi_python
     - requests
     - pubchempy
-    - -e ../eln_packages_common  # This is a local package, so use -e to install it in editable mode
+    - rdkit
+    - -e ./eln_packages_common  # This is a local package, so use -e to install it in editable mode
       # make sure to install the eln_packages_common--still need to make this a more distributable package but for now do it manually.
