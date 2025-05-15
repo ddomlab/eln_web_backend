@@ -4,10 +4,7 @@ import search_process
 import resourcemanage
 
 app = Flask(__name__)
-<<<<<<< HEAD
-=======
 
->>>>>>> 70e96155f2b602ba59b3d7b9d8d9c1a4d76cb7f2
 def rm():
     """
     Initialize the Resource_Manager with the API key from cookies.
