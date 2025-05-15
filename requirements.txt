@@ -1,0 +1,9 @@
+flask
+flask-cors
+pandas
+elabapi_python
+requests
+pubchempy
+rdkit
+
+

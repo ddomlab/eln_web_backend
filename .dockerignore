@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+*.whl
+*.tar.gz
+.git/
+node_modules/
+*.csv
+*.h5
+*.parquet
+tests/
+.env
