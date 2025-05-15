@@ -1,0 +1,17 @@
+name: web_env # Environment name
+
+dependencies:  # Packages should be installed through conda if possible
+  - python=3.12.4  # Python version
+  - pre-commit
+  - ruff
+  - pandas
+
+  - pip:  # Install additional packages through pip if they're not available in the default conda channel
+    - elabapi_python
+    - requests
+    - pubchempy
+    - rdkit
+    - gunicorn
+    - flask
+    - flask-cors
+    - ./eln_packages_common
