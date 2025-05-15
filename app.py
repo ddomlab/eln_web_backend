@@ -75,7 +75,7 @@ def not_found(e):
     return f"404 Not Found: {request.path}", 404
 
 if __name__ == '__main__':
-    app.run(host= '0.0.0.0', debug=True, port=5000)
+    app.run(host= '0.0.0.0', debug=False, port=5000)
     print("Routes:")
     print(app.url_map)
 
