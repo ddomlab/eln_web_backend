@@ -4,7 +4,7 @@ import search_process
 import resourcemanage
 
 app = Flask(__name__)
-app.run(host='0.0.0.0', port=5000, debug=False)
+
 def rm():
     """
     Initialize the Resource_Manager with the API key from cookies.
@@ -14,6 +14,8 @@ def rm():
     if key is None:
         raise ValueError("No API key provided")
     return resourcemanage.Resource_Manager(key=key)
+
+
 @app.route('/ping', methods=['GET'])
 def ping():
     return "pong", 200
@@ -68,5 +70,12 @@ def add_resource():
         print("Error parsing submission:", e)
         return jsonify({"status": "error", "error": str(e)}), 400
 
+@app.errorhandler(404)
+def not_found(e):
+    return f"404 Not Found: {request.path}", 404
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(host= '0.0.0.0', debug=True, port=5000)
+    print("Routes:")
+    print(app.url_map)
+
