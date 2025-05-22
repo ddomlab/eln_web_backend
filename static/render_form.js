@@ -307,7 +307,7 @@ function buildFormFromJson(jsonData) {
   formEl.append(submit);
   formEl.onsubmit = (e) => {
     e.preventDefault();
-    alert(JSON.stringify(getFinalOutput(), null, 2));
+    // alert(JSON.stringify(getFinalOutput(), null, 2));
   };
   formEl.onsubmit = (e) => {
     e.preventDefault();
@@ -343,7 +343,8 @@ function buildFormFromJson(jsonData) {
       })
       .then((responseData) => {
         console.log("Submission succeeded:", responseData);
-        alert("Form submitted successfully.");
+        // alert("Form submitted successfully.");
+        location.reload();
       })
       .catch((err) => {
         console.error("Submission error:", err);

@@ -1,10 +1,11 @@
 # Mac
 .DS_Store
-
+# Other Repo
+eln_packages_common/
 # IDEs
 .idea
 .vscode
-
+api_key
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

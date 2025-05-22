@@ -71,5 +71,9 @@ def add_resource():
         print("Error parsing submission:", e)
         return jsonify({"status": "error", "error": str(e)}), 400
 
+@app.errorhandler(404)
+def not_found(e):
+    return f"404 Not Found: {request.path}", 404
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=False)
