@@ -1,10 +1,9 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import cross_origin
 import search_process
-import resourcemanage
+import eln_packages_common.resourcemanage as resourcemanage
 
 app = Flask(__name__)
-app.run(host='0.0.0.0', port=5000, debug=False)
 def rm():
     """
     Initialize the Resource_Manager with the API key from cookies.
@@ -14,13 +13,17 @@ def rm():
     if key is None:
         raise ValueError("No API key provided")
     return resourcemanage.Resource_Manager(key=key)
+
+@app.route('/')
+def index():
+    return send_from_directory(app.static_folder, "index.html")
 @app.route('/ping', methods=['GET'])
 def ping():
     return "pong", 200
 
 @app.route("/add_resource_interface")
-def index():
-    return send_from_directory(app.static_folder, "index.html")
+def add_resource_interface(): 
+    return send_from_directory(app.static_folder, "add_resource.html")
 
 @app.route('/search', methods=['POST'])
 @cross_origin(origins="http://localhost:8000")
@@ -69,4 +72,4 @@ def add_resource():
         return jsonify({"status": "error", "error": str(e)}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=False)

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Material Form</title>
+    <style>
+      * {
+        font-family: "Fira", monospace;
+      }
+      body {
+        background-color: #f8f9fa;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .form-wrapper {
+        background-color: #ffffff;
+        padding: 2em 3em;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 600px;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 1em;
+      }
+
+      .field {
+        margin-bottom: 1.5em;
+      }
+
+      label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0.3em;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 0.5em 0.75em;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1em;
+        box-sizing: border-box;
+      }
+
+      .unit {
+        margin-left: 0.5em;
+        font-size: 0.9em;
+        color: #555;
+      }
+
+      .description {
+        font-size: 0.85em;
+        color: #666;
+        margin-top: 0.2em;
+      }
+
+      button[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 0.7em;
+        background-color: #007bff;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-wrapper">
+      <h2>Material Entry Form</h2>
+      <form id="generated-form"></form>
+      <!-- Top-left QR code button -->
+      <div
+        id="qr-button"
+        style="
+          position: absolute;
+          top: 1em;
+          left: 1em;
+          text-align: center;
+          cursor: pointer;
+        "
+      >
+        <div id="qr-go-back"></div>
+        <div style="font-size: 0.9em; margin-top: 0.3em">Go Back</div>
+      </div>
+    </div>
+
+    <!-- Form Generation Javascript-->
+    <script src="static/render_form.js"></script>
+
+    <!--Listens for "~" key to go back to main page-->
+    <script>
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "~") {
+          console.log("Special trigger detected");
+          window.location.href = "/";
+        }
+      });
+    </script>
+
+    <!-- QR code generator library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+      // Generate the QR code with content "~"
+      new QRCode(document.getElementById("qr-go-back"), {
+        text: "~",
+        width: 80,
+        height: 80,
+        correctLevel: QRCode.CorrectLevel.H,
+      });
+
+      // Clicking the QR triggers the same logic as keyboard "~"
+      document.getElementById("qr-button").addEventListener("click", () => {
+        window.location.href = "/";
+      });
+    </script>
+  </body>
+</html>

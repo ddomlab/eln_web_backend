@@ -1,5 +1,5 @@
-import fill_info
-import resourcemanage
+import eln_packages_common.fill_info as fill_info
+import eln_packages_common.resourcemanage as resourcemanage
 import json
 
 

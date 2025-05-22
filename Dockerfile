@@ -8,7 +8,6 @@ COPY . .
 
 # Create conda environment from environment.yml
 COPY environment.yml .
-RUN conda env create -f environment.yml
 
 # Activate the environment
 SHELL ["conda", "run", "-n", "customenv", "/bin/bash", "-c"]
