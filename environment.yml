@@ -15,3 +15,4 @@ dependencies:  # Packages should be installed through conda if possible
     - flask
     - flask-cors
     - ./eln_packages_common
+    - pypdf
