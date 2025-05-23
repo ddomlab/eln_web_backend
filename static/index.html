@@ -177,9 +177,17 @@
     </div>
 
     <script>
+      function getCookie(name) {
+        const match = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith(name + "="));
+        return match && decodeURIComponent(match.split("=")[1]);
+      }
       const apiKey = getCookie("apiKey");
       if (!apiKey) {
-        alert("API key not found. Please click \"Add Resource\", where you can find a textbox to enter your API key.");
+        alert(
+          'API key not found. Please click "Add Resource", where you can find a textbox to enter your API key.'
+        );
       }
       const captions = [
         "Voice Mode",
@@ -366,7 +374,8 @@
               }
               console.log("Print request sent");
               return response.blob();
-            }).then((blob) => {
+            })
+            .then((blob) => {
               const pdfUrl = URL.createObjectURL(blob);
               window.open(pdfUrl, "_blank");
             })
@@ -411,8 +420,6 @@
             error();
           } else {
             showExperimentPrompt();
-            
-
           }
         } else if (val === "add tag") {
           const ids = [...registryList.children].map((li) => li.textContent);
@@ -446,7 +453,7 @@
         input.removeEventListener("keydown", experimentKeyListener); // 🔧 Clean up
         document.getElementById("experimentPrompt").style.display = "none";
         document.getElementById("cancelQr").innerHTML = "";
-        
+
         focusOnInput = true;
       }
 
