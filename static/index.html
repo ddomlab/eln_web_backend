@@ -315,6 +315,8 @@
 
       function handleInputSubmission(value) {
         let val = value.trim().toLowerCase();
+        if (val.startsWith("https://eln.ddomlab.org/")) {
+          val = val.split("id=")[1];}
 
         if (val === "voice mode") {
           voiceMode = !voiceMode;
@@ -426,8 +428,6 @@
           return;
 
         } else if (!isNaN(val) && val !== "") {
-          if (url.startsWith("https://eln.ddomlab.org/")) {
-            val = url.split("?id=")[1]; }
           addToRegistry(val);
         }
         inputProcessor.value = "";
