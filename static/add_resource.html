@@ -105,10 +105,10 @@
     <!-- Form Generation Javascript-->
     <script src="static/render_form.js"></script>
 
-    <!--Listens for "£" key to go back to main page-->
+    <!--Listens for "$" key to go back to main page-->
     <script>
       document.addEventListener("keydown", function (event) {
-        if (event.key === "£") {
+        if (event.key === "$") {
           console.log("Special trigger detected");
           window.location.href = "/";
         }
@@ -118,9 +118,9 @@
     <!-- QR code generator library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
-      // Generate the QR code with content "£"
+      // Generate the QR code with content "$"
       new QRCode(document.getElementById("qr-go-back"), {
-        text: "£",
+        text: "$",
         width: 80,
         height: 80,
         correctLevel: QRCode.CorrectLevel.H,

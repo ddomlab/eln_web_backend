@@ -423,9 +423,11 @@
           }
         } else if (val === "add tag") {
           const ids = [...registryList.children].map((li) => li.textContent);
-
           return;
+
         } else if (!isNaN(val) && val !== "") {
+          if (url.startsWith("https://eln.ddomlab.org/")) {
+            val = url.split("?id=")[1]; }
           addToRegistry(val);
         }
         inputProcessor.value = "";
