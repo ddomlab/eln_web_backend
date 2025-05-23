@@ -48,6 +48,9 @@ function buildFormFromJson(jsonData) {
   // API Key
   const apiKey = getCookie("apiKey");
   if (!apiKey) {
+    alert(
+      "No API key found. Please paste an API key to continue. To generate your own, navigate to https://eln.ddomlab.org/ucp.php?tab=3"
+    );
     const wrapper = document.createElement("div");
     wrapper.className = "field";
     const label = document.createElement("label");

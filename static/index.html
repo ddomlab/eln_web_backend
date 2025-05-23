@@ -177,6 +177,10 @@
     </div>
 
     <script>
+      const apiKey = getCookie("apiKey");
+      if (!apiKey) {
+        alert("API key not found. Please click \"Add Resource\", where you can find a textbox to enter your API key.");
+      }
       const captions = [
         "Voice Mode",
         "Clear",
