@@ -69,7 +69,7 @@ def associate():
         return jsonify({"error": "Expected a list of IDs"}), 400
     for id in ids:
         rmn.experiment_item_link(exp_id, id)
-    return "Success", 200
+    return ("Success", 200, {"exp_name": rmn.get_experiment(exp_id)["title"]})
 
 @app.route('/mark_open', methods=['POST'])
 @cross_origin(origins="http://localhost:8000")

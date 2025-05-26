@@ -66,8 +66,14 @@
         gap: 10px;
       }
       .qrItem {
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Horizontal centering */
+        justify-content: center; /* Vertical if needed */
         cursor: pointer;
+      }
+      .qrWrapper {
+        padding: 10px;
       }
       #popup {
         position: fixed;
@@ -221,6 +227,7 @@
         registryList.innerHTML = "";
       }
       function updateModeIndicator() {
+        highlightWrapperByCaption("Batch", registryMode === "batch" ? "#dfedda" : "#ffffff  ");
         modeIndicator.textContent = `Mode: ${
           registryMode.charAt(0).toUpperCase() + registryMode.slice(1)
         }`;
@@ -319,7 +326,8 @@
       function handleInputSubmission(value) {
         let val = value.trim().toLowerCase();
         if (val.startsWith("https://eln.ddomlab.org/")) {
-          val = val.split("id=")[1];}
+          val = val.split("id=")[1];
+        }
 
         if (val === "voice mode") {
           voiceMode = !voiceMode;
@@ -429,7 +437,6 @@
         } else if (val === "add tag") {
           const ids = [...registryList.children].map((li) => li.textContent);
           return;
-
         } else if (!isNaN(val) && val !== "") {
           addToRegistry(val);
         }
@@ -494,7 +501,8 @@
               error();
               throw new Error("Association failed");
             } else {
-              success("Associated!");
+              exp_name = response.headers.get("exp_name");
+              success("Associated with experiment: " + exp_name);
             }
           })
           .catch((err) => {
@@ -512,17 +520,41 @@
       });
 
       function renderQRCode(container, caption) {
+        const canvasWrapper = document.createElement("div");
+        canvasWrapper.className = "qrWrapper";
+        canvasWrapper.style.display = "inline-block"; // Shrinks to fit content
+        // canvasWrapper.style.margin = "10px"; // Adjust as needed
+
         const canvas = document.createElement("canvas");
+        canvasWrapper.appendChild(canvas);
+
         const label = document.createElement("div");
         label.textContent = caption;
-        container.appendChild(canvas);
+
+        container.appendChild(canvasWrapper);
         container.appendChild(label);
-        QRCode.toCanvas(canvas, caption, { width: 128 }, (err) => {
-          if (err) console.error(err);
-        });
+
         container.addEventListener("click", () => {
           inputProcessor.value = caption;
           handleInputSubmission(caption);
+        });
+
+        QRCode.toCanvas(canvas, caption, { width: 128 }, (err) => {
+          if (err) console.error(err);
+        });
+      }
+      function highlightWrapperByCaption(targetCaption, color) {
+        // Find all qrItem containers
+        const qrItems = document.querySelectorAll(".qrItem");
+
+        qrItems.forEach((item) => {
+          const label = item.querySelector("div:last-child");
+          if (label && label.textContent === targetCaption) {
+            const wrapper = item.querySelector(".qrWrapper");
+            if (wrapper) {
+              wrapper.style.backgroundColor = color;
+            }
+          }
         });
       }
 
