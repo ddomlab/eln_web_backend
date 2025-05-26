@@ -5,131 +5,187 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QR Code Registry</title>
     <style>
-      * {
-        font-family: "Fira", monospace;
-      }
-      body {
-        display: flex;
-        flex-direction: row;
-        font-family: sans-serif;
-        margin: 0;
-        height: 100vh;
-      }
-      #registry {
-        width: 100px;
-        background-color: #f2f2f2;
-        padding: 10px;
-        border-right: 2px solid #ccc;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-      #registry h2 {
-        font-size: 1em;
-        margin-top: 0;
-      }
-      #registry ul {
-        list-style-type: none;
-        padding-left: 0;
-        flex-grow: 1;
-        overflow-y: auto;
-      }
-      #registry li {
-        padding: 5px;
-        background-color: #e0e0e0;
-        margin-bottom: 5px;
-        text-align: center;
-      }
-      #modeIndicator {
-        font-size: 0.9em;
-        text-align: center;
-        margin-top: 10px;
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
-      #main {
-        flex-grow: 1;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-      }
-      #inputProcessor {
-        margin-bottom: 10px;
-        height: 30px;
-        font-size: 1em;
-        width: 100%;
-      }
-      #qrGrid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-      }
-      .qrItem {
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Horizontal centering */
-        justify-content: center; /* Vertical if needed */
-        cursor: pointer;
-      }
-      .qrWrapper {
-        padding: 10px;
-      }
-      #popup {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        border: 2px solid #ccc;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        display: none;
-        z-index: 1000;
-      }
-      #popup h3 {
-        margin-top: 0;
-      }
-      #popupGrid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        margin-top: 10px;
-      }
-      #popupClose {
-        margin-top: 15px;
-        text-align: center;
-        cursor: pointer;
-        color: #0077cc;
-      }
-      #successPopup {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: #4caf50;
-        color: white;
-        padding: 10px 16px;
-        border-radius: 5px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        display: none;
-        font-size: 0.9em;
-        z-index: 2000;
-        transition: opacity 0.5s ease;
-      }
-      #unsuccessPopup {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: #d42c26;
-        color: white;
-        padding: 10px 16px;
-        border-radius: 5px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        display: none;
-        font-size: 0.9em;
-        z-index: 2000;
-        transition: opacity 0.5s ease;
-      }
+     @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+* {
+  font-family: "Roboto Mono", monospace;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  height: 100vh;
+  background-color: #fdfdfd;
+  color: #111;
+}
+
+#registry {
+  width: 145px;
+  background-color: #ffffff;
+  border-right: 3px solid #000;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh; /* Make sure it's full-height */
+  overflow: hidden;
+  box-shadow: 3px 0 6px rgba(0, 0, 0, 0.2);
+}
+
+#registry h2 {
+  font-size: 1em;
+  margin-top: 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+#registry ul {
+  list-style-type: none;
+  padding-left: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: calc(100vh - 100px); /* Adjust height to fit within the viewport */
+}
+
+#registry li {
+  padding: 6px;
+  background-color: #e6e6e6;
+  margin-bottom: 6px;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 3em ;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+#registry li:hover {
+  background-color: #d0d0d0;
+  box-shadow: inset 0 0 0 2px #000;
+}
+
+#modeIndicator {
+  font-size: 0.9em;
+  text-align: center;
+  font-weight: bold;
+  color: #444;
+  margin: 10px 0 5px 0;
+}
+
+#main {
+  flex-grow: 1;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#inputProcessor {
+  margin-bottom: 12px;
+  height: 32px;
+  font-size: 1em;
+  padding: 5px 8px;
+  border-radius: 2px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #111;
+}
+
+#qrGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.qrItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.qrWrapper {
+  padding: 12px;
+  border-radius: 0px;
+  background-color: #f2f2f2;
+  box-shadow: 0 0 0 2px #999, 4px 4px 0 #ccc;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.qrWrapper:hover {
+  box-shadow: 0 0 0 2px #000, 6px 6px 0 #555;
+  background-color: #e8e8e8;
+}
+
+.qrWrapper.selected-batch {
+  background-color: #ffff99 !important;
+  box-shadow: 0 0 0 2px #000, 6px 6px 0 #333;
+}
+
+#popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border: 3px solid #000;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 1000;
+}
+
+#popup h3 {
+  margin-top: 0;
+  font-weight: bold;
+}
+
+#popupGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+#popupClose {
+  margin-top: 15px;
+  text-align: center;
+  cursor: pointer;
+  color: #0077cc;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+#successPopup,
+#unsuccessPopup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 16px;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.95em;
+  z-index: 2000;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+  transition: opacity 0.5s ease;
+  display: none;
+}
+
+#successPopup {
+  background-color: #00aa00;
+  border: 2px solid #006600;
+}
+
+#unsuccessPopup {
+  background-color: #cc0000;
+  border: 2px solid #990000;
+}
+
+
     </style>
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   </head>
@@ -227,7 +283,7 @@
         registryList.innerHTML = "";
       }
       function updateModeIndicator() {
-        highlightWrapperByCaption("Batch", registryMode === "batch" ? "#dfedda" : "#ffffff  ");
+        highlightWrapperByCaption("Batch", registryMode==="batch");
         modeIndicator.textContent = `Mode: ${
           registryMode.charAt(0).toUpperCase() + registryMode.slice(1)
         }`;
@@ -543,16 +599,15 @@
           if (err) console.error(err);
         });
       }
-      function highlightWrapperByCaption(targetCaption, color) {
+      function highlightWrapperByCaption(targetCaption, isActive) {
         // Find all qrItem containers
         const qrItems = document.querySelectorAll(".qrItem");
-
         qrItems.forEach((item) => {
           const label = item.querySelector("div:last-child");
           if (label && label.textContent === targetCaption) {
             const wrapper = item.querySelector(".qrWrapper");
             if (wrapper) {
-              wrapper.style.backgroundColor = color;
+              wrapper.classList.toggle("selected-batch", isActive);
             }
           }
         });
