@@ -402,11 +402,11 @@ body {
           if (registryMode === "single") {
             clearRegistry();
           }
-        } else if (val === "on_batch") {
+        } else if (val === "batch mode on") {
           registryMode = "batch";
           updateModeIndicator();
           success();
-        } else if (val === "on_single") {
+        } else if (val === "batch mode off") {
           registryMode = "single";
           // speak(registryMode);
           updateModeIndicator();
@@ -460,10 +460,12 @@ body {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ id: ids }),
-          }).then((response) => {
+          }).then(async response => {
             if (!response.ok) {
-              error();
-              throw new Error("Failed");
+              const errorData = await response.json();
+              error(errorData.error);
+              // error();
+              // throw new Error("Failed, " + response.statusText );
             } else {
               success();
             }
