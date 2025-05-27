@@ -336,9 +336,9 @@ body {
         speechSynthesis.speak(utterance);
       }
 
-      function error() {
+      function error(errorMessage = "Failed!") {
         const popup = document.getElementById("unsuccessPopup");
-        popup.textContent = "Failed!";
+        popup.textContent = errorMessage;
         popup.style.display = "block";
         popup.style.opacity = "1";
         beep(440, 370, "square");
@@ -496,6 +496,9 @@ body {
           return;
         } else if (!isNaN(val) && val !== "") {
           addToRegistry(val);
+        }
+        else{
+          error("Invalid input. Please try again.");
         }
         inputProcessor.value = "";
         if (focusOnInput) {
