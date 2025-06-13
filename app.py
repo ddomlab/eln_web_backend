@@ -19,14 +19,14 @@ def rm():
 
 @app.route('/')
 def index():
-    return send_from_directory(app.static_folder, "index.html")
+    return send_from_directory(app.static_folder, "index.html") # type: ignore
 @app.route('/ping', methods=['GET'])
 def ping():
     return "pong", 200
 
 @app.route("/add_resource_interface")
 def add_resource_interface(): 
-    return send_from_directory(app.static_folder, "add_resource.html")
+    return send_from_directory(app.static_folder, "add_resource.html") # type: ignore
 
 @app.route('/search', methods=['POST'])
 @cross_origin(origins="http://localhost:8000")
@@ -54,7 +54,7 @@ def print_registry():
     print_handling.add_item([int(x) for x in ids])
     print("Printing items with IDs:", ids)
     
-    return send_from_directory(app.static_folder, "print.pdf")
+    return send_from_directory(app.static_folder, "print.pdf") # type: ignore
 
 @app.route('/associate', methods=['POST'])
 @cross_origin(origins="http://localhost:8000")
