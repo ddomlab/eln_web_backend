@@ -45,6 +45,8 @@ def create_label():
         qr_content = "https://eln.ddomlab.org/database.php?mode=view&id=" + str(qr_content)
     if icon == "QR Code":
         icon = None
+    if icon == "None":
+        icon = None
     label_creating.print_label(
         caption=title,
         longcaption=text,
