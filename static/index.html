@@ -268,6 +268,7 @@
         "Open Page",
         //"Add Tag",
         "Associate with Experiment",
+        "Custom Label"
       ];
       const qrGrid = document.getElementById("qrGrid");
       const popupGrid = document.getElementById("popupGrid");
@@ -415,7 +416,10 @@
           success();
         } else if (val === "add resource") {
           window.location.href = "/add_resource_interface";
-        } else if (val === "open page") {
+        } else if (val === "custom label") {
+          window.location.href = "/label_gen_interface";
+        }
+        else if (val === "open page") {
           const ids = [...registryList.children].map((li) => li.textContent);
           if (ids.length === 0) {
             error();
@@ -519,7 +523,7 @@
                 success("Location changed to: " + location);
                 popup.style.display = "none";
                 if (focusOnInput) inputProcessor.focus();
-                
+
               }
             })
             .catch((err) => {

@@ -5,6 +5,7 @@ from datetime import datetime
 import json
 import search_process
 import eln_packages_common.resourcemanage as resourcemanage
+import label_creating
 
 app = Flask(__name__)
 def rm():
@@ -27,6 +28,34 @@ def ping():
 @app.route("/add_resource_interface")
 def add_resource_interface(): 
     return send_from_directory(app.static_folder, "add_resource.html") # type: ignore
+@app.route("/label_gen_interface")
+def label_gen_interface(): 
+    return send_from_directory(app.static_folder, "label_gen.html") # type: ignore
+@app.route('/create_label', methods=['POST'])
+@cross_origin(origins="http://localhost:8000")
+def create_label():
+    data = request.get_json(force=True)
+    title = data.get('Title', '')
+    text = data.get('Text', '')
+    icon = data.get('Icon', None)
+    qr_type = data.get('QRContentType', None)
+    qr_content = data.get('QRContent', None)
+
+    if qr_type == "Resource":
+        qr_content = "https://eln.ddomlab.org/database.php?mode=view&id=" + str(qr_content)
+    if icon == "QR Code":
+        icon = None
+    label_creating.print_label(
+        caption=title,
+        longcaption=text,
+        icon=icon,
+        codecontent=qr_content
+    )
+    return send_from_directory(app.static_folder, "print.pdf") # type: ignore
+
+    
+    
+
 
 @app.route('/search', methods=['POST'])
 @cross_origin(origins="http://localhost:8000")
