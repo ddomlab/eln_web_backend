@@ -30,6 +30,13 @@
   />
 </svg>
 {% endif %}
+{% if not icon and not qr_text %}
+  <style>
+    .extra_info {
+      max-width: 60mm;
+    }
+  </style>
+{% endif %}
 <span class='label'>
     {{ caption }}<br/>
     <!-- id: {{ id_num }} <br/> -->
