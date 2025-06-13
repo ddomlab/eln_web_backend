@@ -90,6 +90,24 @@ def mark_open():
         rmn.change_item(id, {"metadata": json.dumps(metadata), "status": 4})
     return "Success", 200
 
+@app.route('/change_location', methods=['POST'])
+@cross_origin(origins="http://localhost:8000")
+def change_location():
+    data = request.get_json()
+    ids = data.get('id', [])
+    if len(ids) == 0:
+        return jsonify({"error": "No IDs provided"}), 400
+    rmn = rm()
+    if not isinstance(ids, list):
+        return jsonify({"error": "Expected a list of IDs"}), 400
+    for id in ids:
+        body = rmn.get_item(id)
+        metadata = json.loads(body["metadata"])
+        metadata["extra_fields"]["Location"]["value"] = data.get('location', "")
+        rmn.change_item(id, {"metadata": json.dumps(metadata), "status": 4})
+    return "Success", 200
+
+
 @app.route('/mark_empty', methods=['POST'])
 @cross_origin(origins="http://localhost:8000")
 def mark_empty():
@@ -136,7 +154,26 @@ def add_resource():
     except Exception as e: # send all errors to the client
         print("Error parsing submission:", e)
         return jsonify({"status": "error", "error": str(e)}), 400
-
+@app.route('/get_locations', methods=['GET'])
+@cross_origin(origins="http://localhost:8000")
+def get_locations():
+    try:
+        rmn = rm()
+        types = rmn.get_items_types()
+        locations = []
+        for t in types:
+            try:
+                locs = json.loads(t["metadata"])["extra_fields"]["Location"]["options"]
+            except KeyError:
+                locs = []
+            # Add only unique locations
+            for loc in locs:
+                if loc not in locations:
+                    locations.append(loc)
+        return jsonify(locations)
+    except Exception as e:
+        print("Error getting locations:", e)
+        return jsonify({"status": "error", "error": str(e)}), 400
 @app.errorhandler(404)
 def not_found(e):
     return f"404 Not Found: {request.path}", 404
