@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 
-def print_label(caption: str = "", codecontent:str | None = None, longcaption: str | None = None, icon: str | None = None):
+def print_label(caption: str = "", codecontent:str | None = None, longcaption: str | None = None, icon: str | None = None, height=18):
     current_dir = Path(__file__).parent
 
 
@@ -18,6 +18,7 @@ def print_label(caption: str = "", codecontent:str | None = None, longcaption: s
     :param codecontent: The content for the QR code, if None, no QR code is generated
     :param longcaption: A longer caption for the label, if None, no long caption is displayed
     :param icon: An icon to be displayed on the label, if None, no icon is displayed
+    :param height: The height of the label in mm, default is 18mm
     """
     records = []
     if codecontent is not None and icon is not None:
@@ -27,7 +28,8 @@ def print_label(caption: str = "", codecontent:str | None = None, longcaption: s
             caption=caption,
             qr_text=codecontent,
             longcaption=longcaption,
-            icon=icon
+            icon=icon,
+            user_height=height,
         )
     )
     label_writer.write_labels(records, target=path)

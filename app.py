@@ -40,6 +40,7 @@ def create_label():
     icon = data.get('Icon', None)
     qr_type = data.get('QRContentType', None)
     qr_content = data.get('QRContent', None)
+    height = data.get('Height', 18)
 
     if qr_type == "Resource":
         qr_content = "https://eln.ddomlab.org/database.php?mode=view&id=" + str(qr_content)
@@ -51,7 +52,8 @@ def create_label():
         caption=title,
         longcaption=text,
         icon=icon,
-        codecontent=qr_content
+        codecontent=qr_content,
+        height=height
     )
     return send_from_directory(app.static_folder, "print.pdf") # type: ignore
 
@@ -138,6 +140,31 @@ def change_location():
         rmn.change_item(id, {"metadata": json.dumps(metadata), "status": 4})
     return "Success", 200
 
+# @app.route('/change_sublocation', methods=['POST'])
+# @cross_origin(origins="http://localhost:8000")
+# def change_sublocation():
+#     data = request.get_json()
+#     ids = data.get('id', [])
+#     if len(ids) == 0:
+#         return jsonify({"error": "No IDs provided"}), 400
+#     rmn = rm()
+#     if not isinstance(ids, list):
+#         return jsonify({"error": "Expected a list of IDs"}), 400
+#     for id in ids:
+#         # body = rmn.get_item(id)
+#         # metadata = json.loads(body["metadata"])
+#         # new_field = {
+#         #     "Sublocation":
+#         #         {
+#         #             "value": data.get('sublocation', "err"),
+#         #             "type": "text",
+#         #             "description": "This optional sublocation field can be used to specify a precise location of this item (shelf, drawer, bin, etc.). "
+#         #             "This field is optional, and may not be entirely accurate. It is inteded to serve as a hint, not a definitive location."
+#         #         }
+#         # }
+#         # metadata["extra_fields"].update(new_field)
+#         # rmn.change_item(id, {"metadata": json.dumps(metadata)})
+#     return "Success", 200
 
 @app.route('/mark_empty', methods=['POST'])
 @cross_origin(origins="http://localhost:8000")

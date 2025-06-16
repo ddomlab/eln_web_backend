@@ -163,13 +163,19 @@
 
       <div class="field">
         <label for="text">Text</label>
-        <textarea id="text" name="text"> </textarea>
+        <textarea id="text" name="text" , rows="6" , cols="50"> </textarea>
+      </div>
+
+      <div class="field">
+        <label for="quantity">Height (Default 18):</label>
+          <input placeholder="18" style="width: 80px" type="number" id="height" name="height" min="10" max="50" /> <b>mm</b>
+        <!-- <span style="text-align: right">mmm</span> -->
+
       </div>
 
       <div class="field">
         <label for="icon">Icon</label>
         <select id="icon" name="icon" required>
-          <option value="">Select an Icon</option>
           <option value="None">None</option>
           <option value="QR Code">QR Code</option>
           <option value="i">i</option>
@@ -181,8 +187,8 @@
       <div class="field" id="qr-content-type-field">
         <label for="qrContentType">QR Content Type</label>
         <select id="qrContentType" name="qrContentType">
-          <option value="Resource">Resource</option>
           <option value="Text">Text</option>
+          <option value="Resource">Resource</option>
         </select>
       </div>
       <div class="field" id="qr-content-field">

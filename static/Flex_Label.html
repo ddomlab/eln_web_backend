@@ -54,6 +54,11 @@
   }
 </style>
 {% endif %}
+<style>
+  @page {
+    height: {{ user_height }}mm; /* ignore the problem, it is fine */
+  }
+</style>
 <span class="label">
   {{ caption }}<br />
   <!-- id: {{ id_num }} <br/> -->
