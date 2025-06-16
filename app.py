@@ -21,6 +21,9 @@ def rm():
 @app.route('/')
 def index():
     return send_from_directory(app.static_folder, "index.html") # type: ignore
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(app.static_folder, "favicon.ico") # type: ignore
 @app.route('/ping', methods=['GET'])
 def ping():
     return "pong", 200
