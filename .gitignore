@@ -1,5 +1,4 @@
-*print.pdf
-# Mac
+*.pdf
 .DS_Store
 # Other Repo
 eln_packages_common/

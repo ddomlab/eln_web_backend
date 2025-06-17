@@ -6,7 +6,6 @@ import json
 import search_process
 import eln_packages_common.resourcemanage as resourcemanage
 import label_creating
-
 app = Flask(__name__)
 def rm():
     """
@@ -21,9 +20,10 @@ def rm():
 @app.route('/')
 def index():
     return send_from_directory(app.static_folder, "index.html") # type: ignore
-@app.route('/favicon.ico')
+@app.route('/favicon.ico', methods=['GET'])
 def favicon():
-    return send_from_directory(app.static_folder, "favicon.ico") # type: ignore
+    # return send_from_directory(app.static_folder, 'favicon.ico') # type: ignore   
+    return jsonify({"status": "ok", "message": "favicon.ico not available"}), 404
 @app.route('/ping', methods=['GET'])
 def ping():
     return "pong", 200
