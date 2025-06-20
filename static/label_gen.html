@@ -233,6 +233,7 @@
             Title: document.getElementById("title").value,
             Text: document.getElementById("text").value,
             Icon: document.getElementById("icon").value,
+            Height: document.getElementById("height").value || 18, // Default to 18 if empty
           };
 
           if (data.Icon === "QR Code") {
