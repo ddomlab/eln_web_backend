@@ -72,7 +72,11 @@ def search():
     template = data.get('template')
 
     print("Search query:", CAS)
-    results = search_process.search_and_fill(template, CAS)
+    try:
+        results = search_process.search_and_fill(template, CAS)
+    except ValueError as e:
+        print("Error in search_and_fill:", e)
+        return jsonify({"error": str(e)}), 400
     print("Results:", results)
     return jsonify(results)
 

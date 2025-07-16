@@ -162,14 +162,17 @@ function buildFormFromJson(jsonData) {
     })
       .then((r) => r.json())
       .then((data) => {
-        if (data && data.extra_fields) {
+        if (data && data.extra_fields && !data.error) {
           // preserve currently selected category
           const selected = formEl.querySelector("#category")?.value;
           if (selected) {
             data.category = selected; // override category from response
           }
           buildFormFromJson(data);
-        } else {
+        } else if (data.error) {
+          alert(`Error: ${data.error}`);
+        } 
+        else {
           alert("Invalid response");
         }
       })
