@@ -105,7 +105,6 @@ function buildFormFromJson(jsonData) {
   categorySelect.addEventListener("change", () => {
     const selected = categorySelect.value;
     const previousData = getFinalOutput();
-
     fetchTemplate(selected)
       .then((newSchema) => {
         // Inject previous values where keys match
@@ -133,9 +132,19 @@ function buildFormFromJson(jsonData) {
 
   // CAS Search
   const searchWrapper = document.createElement("div");
+  searchWrapper.id = "cas-search-wrapper";
   searchWrapper.className = "field";
-  searchWrapper.style.display = "flex";
+  // searchWrapper.style.display = "flex";
   searchWrapper.style.gap = "0.5em";
+  // Determine visibility of CAS search
+  const catVal = jsonData.category;
+  console.log(catVal);
+  if (catVal && catVal !== "1") {
+    searchWrapper.style.display = "flex";
+  } else {
+    searchWrapper.style.display = "none";
+}
+
   const searchInput = document.createElement("input");
   searchInput.type = "text";
   searchInput.placeholder = "Search by CAS";
