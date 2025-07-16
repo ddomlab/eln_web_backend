@@ -138,7 +138,6 @@ function buildFormFromJson(jsonData) {
   searchWrapper.style.gap = "0.5em";
   // Determine visibility of CAS search
   const catVal = jsonData.category;
-  console.log(catVal);
   if (catVal && catVal !== "1") {
     searchWrapper.style.display = "flex";
   } else {
