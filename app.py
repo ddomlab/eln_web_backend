@@ -251,6 +251,16 @@ def store_pth_data():
     if pth_data.save_as_csv(path, data):
         return jsonify({"status": "success"}), 200
     return jsonify({"status": "error"}), 500
+@app.route('/get_closest_pth_data', methods=['GET'])
+@cross_origin(origins="http://localhost:8000")
+def get_closest_pth_data():
+    target_time = request.args.get('time')
+    if not target_time:
+        return jsonify({"error": "No time provided"}), 400
+    result = pth_data.get_closest_time("pth_data.csv", target_time)
+    if result:
+        return jsonify(result), 200
+    return jsonify({"error": "No matching data found"}), 404
 
 @app.errorhandler(404)
 def not_found(e):
