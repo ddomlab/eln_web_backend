@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import cross_origin
 import print_handling
+import pth_data
 from datetime import datetime
 import json
 import search_process
@@ -239,6 +240,18 @@ def get_locations():
     except Exception as e:
         print("Error getting locations:", e)
         return jsonify({"status": "error", "error": str(e)}), 400
+
+@app.route('/store_pth_data', methods=['POST'])
+@cross_origin(origins="http://localhost:8000")
+def store_pth_data():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+    path = "pth_data.csv"
+    if pth_data.save_as_csv(path, data):
+        return jsonify({"status": "success"}), 200
+    return jsonify({"status": "error"}), 500
+
 @app.errorhandler(404)
 def not_found(e):
     return f"404 Not Found: {request.path}", 404
