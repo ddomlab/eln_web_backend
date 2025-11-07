@@ -30,7 +30,10 @@ def get_closest_time(path:str, target_time: str | int) -> dict | None:
 
     # if target_time is a string, convert it to epoch time integer
     if isinstance(target_time, str):
-        target_time = int(datetime.fromisoformat(target_time).timestamp())
+        if target_time.isdigit():
+            target_time = int(target_time)
+        else:
+            target_time = int(datetime.fromisoformat(target_time).timestamp())
     
     # Find closest data['time'] value to target_time and return that row as a dictionary
     data['time'] = data['time'].astype(int)
