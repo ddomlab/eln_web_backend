@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import cross_origin
 import print_handling
@@ -8,6 +9,10 @@ import search_process
 import eln_packages_common.resourcemanage as resourcemanage
 import label_creating
 app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_PATH = os.path.join(BASE_DIR, "pth_data.csv")
+    
+
 def rm():
     """
     Initialize the Resource_Manager with the API key from cookies.
@@ -247,17 +252,16 @@ def store_pth_data():
     data = request.get_json()
     if not data:
         return jsonify({"error": "No data provided"}), 400
-    path = "pth_data.csv"
-    if pth_data.save_as_csv(path, data):
+    if pth_data.save_as_csv(CSV_PATH, data):
         return jsonify({"status": "success"}), 200
     return jsonify({"status": "error"}), 500
 @app.route('/get_closest_pth_data', methods=['GET'])
 @cross_origin(origins="http://localhost:8000")
 def get_closest_pth_data():
-    target_time = request.args.get('time')
+    target_time = request.args.get('time')  
     if not target_time:
         return jsonify({"error": "No time provided"}), 400
-    result = pth_data.get_closest_time("pth_data.csv", target_time)
+    result = pth_data.get_closest_time(CSV_PATH, target_time)
     if result:
         return jsonify(result), 200
     return jsonify({"error": "No matching data found"}), 404
