@@ -8,9 +8,13 @@ import json
 import search_process
 import eln_packages_common.resourcemanage as resourcemanage
 import label_creating
+from bottle_ocr import bottle_ocr_bp
+
 app = Flask(__name__)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_PATH = os.path.join(BASE_DIR, "pth_data.csv")
+
+app.register_blueprint(bottle_ocr_bp)
     
 
 def rm():
